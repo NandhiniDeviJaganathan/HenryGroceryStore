@@ -13,8 +13,6 @@ public class PurchaseGrocery {
 
 	public static void main(String[] args) throws Exception{
 		
-		
-		
 		Scanner input = new Scanner(System.in);
 
 		LocalDate currDate = LocalDate.now();
