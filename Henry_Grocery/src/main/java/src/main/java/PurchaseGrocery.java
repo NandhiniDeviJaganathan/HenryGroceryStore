@@ -1,8 +1,7 @@
 package src.main.java;
 
-import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.io.IOException;
+import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.util.Properties;
 import java.util.Scanner;
@@ -26,7 +25,7 @@ public class PurchaseGrocery {
 		System.out.println("Enter Purchase Date with the format yyyy-MM-dd");
 		String date = input.next();
 		purDate = GroceryVaildation.DateValidation(date);
-		
+		DecimalFormat df = new DecimalFormat("##.##");
 		
             FileReader fr = new FileReader("price.properties");
             Properties prop = new Properties();
@@ -64,23 +63,24 @@ public class PurchaseGrocery {
 			case 1:
 				soupQty = qty;
 				price = soupPrice;
-				totalAmt = Math.floor(productPrice.totalCaluculation(totalAmt, price, qty));
-				System.out.println(totalAmt);
+				totalAmt = productPrice.totalCaluculation(totalAmt, price, qty);
+				
+				System.out.println(df.format(totalAmt));
 				break;
 			case 2:
 				price = breadPrice;
-				totalAmt = Math.floor(productPrice.breadDiscountCalculation(price, qty, soupQty, currDate, purDate, totalAmt));
-				System.out.println(totalAmt);
+				totalAmt = productPrice.breadDiscountCalculation(price, qty, soupQty, currDate, purDate, totalAmt);
+				System.out.println(df.format(totalAmt));
 				break;
 			case 3:
 				price = milkPrice;
-				totalAmt = Math.floor(productPrice.totalCaluculation(totalAmt, price, qty));
-				System.out.println(totalAmt);
+				totalAmt = productPrice.totalCaluculation(totalAmt, price, qty);
+				System.out.println(df.format(totalAmt));
 				break;
 			case 4:
 				price = applePrice;
-				totalAmt = Math.floor(productPrice.appleDiscountCalculation(price, qty, currDate, purDate,  totalAmt));
-				System.out.println(totalAmt);
+				totalAmt = productPrice.appleDiscountCalculation(price, qty, currDate, purDate,  totalAmt);
+				System.out.println(df.format(totalAmt));
 				break;
 			default:
 				break;
@@ -89,7 +89,7 @@ public class PurchaseGrocery {
 		}
 		
 		if(groceryItems >=0)
-			System.out.println("Total Amount for your purchase: "+totalAmt);
+			System.out.println("Total Amount for your purchase: "+df.format(totalAmt));
 		
 		
 	}

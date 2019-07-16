@@ -3,12 +3,15 @@ import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.util.Properties;
 
+import org.junit.Test;
+
 import src.main.java.PriceCalculation;
 
 public class PriceCalculationTest {
 
-	/*private PriceCalculation prdPrice;
-	FileReader fr = new FileReader("price.properties");
+	private PriceCalculation prdPrice;
+	private FileReader fileReader;
+	fr= new FileReader("price.properties");
     Properties prop = new Properties();
     //prop.load(fr);
     
@@ -22,8 +25,8 @@ public class PriceCalculationTest {
 		double expected = 2.4;
 		prdPrice = new PriceCalculation();
 		LocalDate purchaseDate = LocalDate.parse("2019-06-26");
-		double actual = prdPrice.calculateBreadPrice(LocalDate.now(), 0, GroceryShoppingConstants.BREAD_PRICE, 0,
-				purchaseDate, 3);
+		double actual = prdPrice.breadDiscountCalculation( breadPrice, 3,  0, purchaseDate, LocalDate.now(),
+				0);
 		//Assert.assertEquals(expected, Double.parseDouble(new DecimalFormat("#.##").format(actual)));
-	}*/
+	}
 }
