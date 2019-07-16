@@ -1,7 +1,11 @@
 package src.main.java;
 
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.YearMonth;
+import java.util.Properties;
 
 import src.main.java.util.GroceryVaildation;
 
@@ -9,21 +13,25 @@ public class PriceCalculation {
 	
 	
 	public double breadDiscountCalculation(double price, int breadQty, int soupQty, LocalDate currDate, LocalDate purDate, 
-			double breadDiscountPrice){
+			double breadDiscountPrice) throws Exception{
 			
 		LocalDate breadDiscountStartDate = currDate.minusDays(1);
 		LocalDate breadDiscountEndDate = breadDiscountStartDate.plusDays(7);
+		FileReader fr = new FileReader("price.properties");
+        Properties prop = new Properties();
+        prop.load(fr);
+        double brdDisPrice = Double.valueOf(prop.getProperty("BREAD_DISCOUNT_PRICE"));
 		
 		if(soupQty>2 && GroceryVaildation.discountDateValidation(purDate, breadDiscountStartDate,
 				breadDiscountEndDate))
 		{
 			int breadDiscount = (int) Math.floor((soupQty/2));
 			if(breadQty <= breadDiscount){
-				breadDiscountPrice = breadDiscountPrice + (breadQty * 0.40);
+				breadDiscountPrice = breadDiscountPrice + (breadQty * brdDisPrice);
 			}
 			if(breadQty > breadDiscount)
 			{
-				breadDiscountPrice = breadDiscountPrice + ((breadDiscount * 0.40)+((breadQty - breadDiscount)*price));
+				breadDiscountPrice = breadDiscountPrice + ((breadDiscount * brdDisPrice)+((breadQty - breadDiscount)*price));
 			}	
 		}else{
 			breadDiscountPrice =totalCaluculation(breadDiscountPrice, price, breadQty);
